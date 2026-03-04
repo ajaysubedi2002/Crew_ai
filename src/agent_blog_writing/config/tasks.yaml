@@ -1,0 +1,93 @@
+# create_outline:
+#   description: >
+#     Generate a comprehensive blog outline for a blog post about {topic}.    
+#     Include:
+#     - Blog Title (H1) related to {topic}
+#     - Introduction
+#     - Multiple H2 Sections
+#     - H3 Subsections (where appropriate)
+#     - Conclusion
+#     - FAQ section (if relevant)
+
+#     The outline must be structured using proper Markdown headings.
+#   expected_output: >
+#     A detailed blog outline about {topic} formatted in Markdown.
+#   agent: outline_creator
+
+# write_content:
+#   description: >
+#     Using the generated outline, write the complete blog post about {topic}.
+#     Expand each section thoroughly while maintaining clarity,
+#     engagement, and logical flow.
+#     Follow the outline exactly.
+#   expected_output: >
+#     A full draft blog post about {topic} written in Markdown format.
+#   agent: content_writer
+#   context:
+#     - create_outline
+
+# finalize_blog:
+#   description: >
+#     Combine the drafted content into a final polished blog post about {topic}.
+#     Improve transitions, refine language, ensure consistency,
+#     enhance readability, and optimize formatting.
+
+#     The final output must be a clean Markdown file.
+#   expected_output: >
+#     A publication-ready Markdown blog file about {topic} saved as blogpost.md.
+#   agent: editor_enhancer
+#   context:
+#     - write_content
+
+
+create_outline:
+  description: >
+    Generate a comprehensive blog outline about {topic}.
+    Use web search if needed.
+  expected_output: >
+    A detailed Markdown outline.
+  agent: outline_creator
+
+write_content:
+  description: >
+    Write the full blog post about {topic}
+    using the outline. Search if necessary.
+  expected_output: >
+    A full Markdown draft.
+  agent: content_writer
+  context:
+    - create_outline
+
+finalize_blog:
+  description: >
+    Polish and enhance the blog post about {topic}.
+    Verify facts if needed.
+  expected_output: >
+    A publication-ready Markdown blog file.
+  agent: editor_enhancer
+  context:
+    - write_content
+
+generate_images_and_embed:
+  description: >
+    You MUST use the blog_image_generator tool to create images.
+    
+    Step 1: Read the blog post about {topic}.
+    Step 2: For each H2 section, call the blog_image_generator tool with a simple prompt.
+    Step 3: Insert the returned image path into the markdown.
+    
+    Example tool call:
+    Action: blog_image_generator
+    Action Input: {"prompt": "Middle East map showing Iran and Iraq conflict"}
+    
+    After getting the image path, format it as:
+    ![description](generated_images/blog_xxxxx.png)
+    
+    YOU MUST CALL THE TOOL AT LEAST 2 TIMES. Do not skip this step.
+  expected_output: >
+    The complete blog post in Markdown with at least 2 images embedded.
+    Each image must use the format: ![alt text](image_path)
+    Images must be from the generated_images folder.
+  agent: image_generator
+  context:
+    - finalize_blog

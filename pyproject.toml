@@ -1,0 +1,35 @@
+[project]
+name = "agent_blog_writing"
+version = "0.1.0"
+description = "Agent_blog_writing using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "accelerate>=1.12.0",
+    "apscheduler>=3.11.2",
+    "crewai[tools]==1.9.3",
+    "email-validator>=2.3.0",
+    "fastapi>=0.135.1",
+    "fastapi-sso>=0.21.0",
+    "google-genai>=1.65.0",
+    "huggingface-hub>=0.36.2",
+    "litellm>=1.75.3",
+    "pillow>=12.1.1",
+    "tavily-python>=0.7.22",
+    "transformers>=4.46.3",
+]
+
+[project.scripts]
+agent_blog_writing = "agent_blog_writing.main:run"
+run_crew = "agent_blog_writing.main:run"
+train = "agent_blog_writing.main:train"
+replay = "agent_blog_writing.main:replay"
+test = "agent_blog_writing.main:test"
+run_with_trigger = "agent_blog_writing.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
