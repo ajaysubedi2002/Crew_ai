@@ -13,18 +13,31 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 # Replace with inputs you want to test with, it will automatically
 # interpolate any tasks and agents information
 
-def run():
-    """
-    Run the crew.
-    """
-    inputs = {
-        'topic': 'provide me the Latest updates on the iran vs iraq war  and America  ',
-    }
+import shutil
+import os
+from agent_blog_writing.crew import AgentBlogWriting
 
-    try:
-        AgentBlogWriting().crew().kickoff(inputs=inputs)
-    except Exception as e:
-        raise Exception(f"An error occurred while running the crew: {e}")
+def clear_memory():
+    paths = [
+        "./memory",
+        "./.crewai_memory",   # default crewai memory folder
+        "./db",               # chroma default
+    ]
+    for path in paths:
+        if os.path.exists(path):
+            shutil.rmtree(path)
+            print(f"Cleared memory: {path}")
+
+def run():
+    clear_memory()   # ← wipe before every run
+    
+    result = AgentBlogWriting().crew().kickoff(
+        inputs={"topic": "Latest updates on Iran vs Israel and America"}
+    )
+    print(result)
+
+if __name__ == "__main__":
+    run()
 
 
 # def train():
