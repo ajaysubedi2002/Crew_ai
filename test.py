@@ -24,9 +24,9 @@ def test_hf_model_direct(prompt: str):
         # Save and show for immediate feedback
         image.save("quick_test.png")
         image.show() 
-        print("✅ Success! Image saved as quick_test.png")
+        print("Success! Image saved as quick_test.png")
     except Exception as e:
-        print(f"❌ API Error: {e}")
+        print(f"API Error: {e}")
 
 if __name__ == "__main__":
     test_hf_model_direct("A minimalist 3D isometric office icon, high resolution")

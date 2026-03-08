@@ -1,232 +1,3 @@
-# create_outline:
-#   description: >
-#     Generate a comprehensive blog outline for a blog post about {topic}.    
-#     Include:
-#     - Blog Title (H1) related to {topic}
-#     - Introduction
-#     - Multiple H2 Sections
-#     - H3 Subsections (where appropriate)
-#     - Conclusion
-#     - FAQ section (if relevant)
-
-#     The outline must be structured using proper Markdown headings.
-#   expected_output: >
-#     A detailed blog outline about {topic} formatted in Markdown.
-#   agent: outline_creator
-
-# write_content:
-#   description: >
-#     Using the generated outline, write the complete blog post about {topic}.
-#     Expand each section thoroughly while maintaining clarity,
-#     engagement, and logical flow.
-#     Follow the outline exactly.
-#   expected_output: >
-#     A full draft blog post about {topic} written in Markdown format.
-#   agent: content_writer
-#   context:
-#     - create_outline
-
-# finalize_blog:
-#   description: >
-#     Combine the drafted content into a final polished blog post about {topic}.
-#     Improve transitions, refine language, ensure consistency,
-#     enhance readability, and optimize formatting.
-
-#     The final output must be a clean Markdown file.
-#   expected_output: >
-#     A publication-ready Markdown blog file about {topic} saved as blogpost.md.
-#   agent: editor_enhancer
-#   context:
-#     - write_content
-
-
-# create_outline:
-#   description: >
-#     Generate a comprehensive blog outline about {topic}.
-#     Use web search if needed.
-#   expected_output: >
-#     A detailed Markdown outline.
-#   agent: outline_creator
-
-# write_content:
-#   description: >
-#     Write the full blog post about {topic}
-#     using the outline. Search if necessary.
-#   expected_output: >
-#     A full Markdown draft.
-#   agent: content_writer
-#   context:
-#     - create_outline
-
-# finalize_blog:
-#   description: >
-#     Polish and enhance the blog post about {topic}.
-#     Verify facts if needed.
-#   expected_output: >
-#     A publication-ready Markdown blog file.
-#   agent: editor_enhancer
-#   context:
-#     - write_content
-
-# generate_images_and_embed:
-#   description: >
-#     You MUST use the blog_image_generator tool to create images.    
-#     Step 1: Read the blog post about {topic}.
-#     Step 2: For each H2 section, call the blog_image_generator tool with a simple prompt.
-#     Step 3: Insert the returned image path into the markdown.
-    
-#     Example tool call:
-#     Action: blog_image_generator
-#     Action Input: {"prompt": "Middle East map showing Iran and Iraq conflict"}
-    
-#     After getting the image path, format it as:
-#     ![description](generated_images/blog_xxxxx.png)
-    
-#     YOU MUST CALL THE TOOL AT LEAST 2 TIMES. Do not skip this step.
-#   expected_output: >
-#     The complete blog post in Markdown with at least 2 images embedded.
-#     Each image must use the format: ![alt text](image_path)
-#     Images must be from the generated_images folder.
-#   agent: image_generator
-#   context:
-#     - finalize_blog
-
-
-
-# create_outline:
-#   description: >
-#     Generate a comprehensive, SEO-optimized outline about {topic}.
-
-#     Requirements:
-#     - Use H1, H2, H3 hierarchy
-#     - Include:
-#         • Background / Context
-#         • Timeline (if geopolitical)
-#         • Key Developments
-#         • Strategic Analysis
-#         • International Impact
-#         • Statistics section (if applicable)
-#         • Future Outlook
-#         • FAQ section (3–5 questions)
-#     - Suggest 5 SEO keywords
-#     - Maintain logical progression
-#     - Use TavilySearchTool if topic is recent or time-sensitive
-#   expected_output: >
-#     A detailed, well-structured Markdown outline.
-#   agent: outline_creator
-
-
-# write_content:
-#   description: >
-#     Expand the outline into a high-quality, authoritative blog post.
-
-#     Requirements:
-#     - Minimum 1200–1800 words
-#     - Expand every H2 and H3 fully
-#     - Add real dates and historical context
-#     - Provide geopolitical or analytical insight
-#     - Avoid vague statements
-#     - Avoid repetition
-#     - Maintain professional tone
-#     - Use TavilySearchTool when necessary
-#   expected_output: >
-#     A full long-form Markdown blog draft.
-#   agent: content_writer
-#   context:
-#     - create_outline
-
-
-# verify_facts:
-#   description: >
-#     Review the blog draft and verify:
-#     - Dates
-#     - Casualty figures
-#     - Military events
-#     - Political statements
-#     - Statistical claims
-
-#     Correct inaccuracies and remove unsupported claims.
-#     Use TavilySearchTool for verification.
-#   expected_output: >
-#     A fact-verified and corrected Markdown draft.
-#   agent: fact_verifier
-#   context:
-#     - write_content
-
-
-# finalize_blog:
-#   description: >
-#     Polish and elevate the blog to publication quality.
-
-#     Improve:
-#     - Flow and transitions
-#     - Structural clarity
-#     - Authority and tone
-#     - Introduction hook
-#     - Conclusion with strategic outlook
-#     - Readability and formatting
-
-#     Remove redundant sections.
-#   expected_output: >
-#     A publication-ready Markdown blog file.
-#   agent: editor_enhancer
-#   context:
-#     - verify_facts
-
-# generate_images_and_embed:
-#   description: >
-#     Generate strategically selected images and embed them in the blog.
-
-#     === PHASE 1: STRATEGIC SELECTION ===
-#     Read the full blog. For each H2 section, ask:
-#       - "Would a reader understand this better with a visual?"
-#       - "Can I create a specific, non-generic image for this?"
-#     Select maximum 3 sections that answer YES to both.
-#     Skip introduction, conclusion, and any section that is self-contained text.
-
-#     === PHASE 2: PROMPT CONSTRUCTION ===
-#     For each selected section, write a detailed prompt:
-#       - Reference specific facts, names, or events from that section
-#       - Specify image style (photorealistic, flat illustration, diagram, etc.)
-#       - Include composition details (foreground, background, focal point)
-#       - State the intended emotional or informational effect
-#       BAD prompt: "Image about climate change"
-#       GOOD prompt: "Flat-style infographic comparing annual Arctic ice loss
-#         from 1980 to 2023, using a shrinking ice sheet silhouette with
-#         annotated percentage labels, cool blue and white palette, clean
-#         sans-serif typography, minimal background"
-
-#     === PHASE 3: GENERATION ===
-#     Call blog_image_generator tool once per selected section.
-#     If the tool returns an error or empty result, log it and skip — do NOT retry
-#     with a weaker prompt or generate a substitute.
-
-#     === PHASE 4: EMBEDDING ===
-#     Insert each image immediately below its H2 heading using this format:
-#       ![Clear descriptive alt text](generated_images/blog_xxxxx.png)
-#     *Caption: One sentence explaining what the image shows and why it matters.*
-
-#     === HARD CONSTRAINTS ===
-#     - STOP after 3 tool calls, regardless of remaining sections
-#     - Do NOT generate images for Introduction or Conclusion
-#     - Do NOT produce generic, decorative, or filler images
-#     - Do NOT embed images in the middle of paragraphs — only below H2 headings
-#     - If fewer than 2 high-value sections exist, generate fewer than 2 images
-
-#   expected_output: >
-#     Complete Markdown blog post with exactly 2–3 embedded images.
-#     Each image appears directly below an H2 heading.
-#     Each image has a descriptive alt text and a one-sentence caption.
-#     No images in Introduction or Conclusion sections.
-#     Blog content is otherwise unchanged from the finalized version.
-#   agent: image_generator
-#   context:
-#     - finalize_blog
-
-# ============================================================
-#  TASKS CONFIGURATION
-# ============================================================
-
 orchestrate:
   description: >
     Analyse the topic: {topic}
@@ -359,91 +130,52 @@ decide_images:
 
 generate_images_and_embed:
   description: >
-    Enhance the finalized blog about {topic} by inserting 2–3
-    strategically generated images using the blog_image_generator tool.
+    Enhance the finalized blog about {topic} by inserting images.
+
+    IMPORTANT CONTEXT:
+
+    The previous agent has already decided where images
+    should be placed and provided the prompts.
+
+    Use the following structured data:
+
+    IMAGE SECTIONS:
+    {decide_images.image_sections}
+
+    IMAGE PROMPTS:
+    {decide_images.image_prompts}
 
     -----------------------------
-    PHASE 1 — SECTION ANALYSIS
+    YOUR JOB
     -----------------------------
-    Read the entire finalized blog.
 
-    Identify all H2 sections.
-
-    For each H2 section assign two scores:
-
-      Visual Necessity (1–5)
-      Topic Specificity (1–5)
-
-    Select sections with combined score ≥ 7.
-
-    Constraints:
-      • Maximum 3 sections
-      • Never choose Introduction
-      • Never choose Conclusion
+    1. Read the finalized blog.
+    2. For each section listed in IMAGE SECTIONS:
+       - Take the corresponding prompt from IMAGE PROMPTS.
+       - Call blog_image_generator tool with that prompt.
+    3. Generate exactly one image per section.
 
     -----------------------------
-    PHASE 2 — PROMPT CREATION
+    IMAGE EMBEDDING
     -----------------------------
-    For each selected section construct a detailed prompt
-    between 50–80 words describing the image.
 
-    The prompt must include:
-
-      • the main concept of the section
-      • visual representation type
-      • illustration style
-      • color palette
-      • composition layout
-      • what information the image communicates
-      • elements that must be avoided
-
-    Example of a GOOD prompt:
-
-    "Clean vector infographic illustrating the workflow of
-    a modern AI blog generation pipeline, showing stages
-    like topic research, outline creation, content writing,
-    and image generation. Use minimal flat design, blue and
-    white color palette, directional arrows connecting stages,
-    clear labels in sans-serif font, centered composition,
-    no decorative icons or gradients."
-
-    -----------------------------
-    PHASE 3 — IMAGE GENERATION
-    -----------------------------
-    For each selected section:
-
-      Call blog_image_generator tool
-      using the constructed prompt.
-
-    If the tool fails:
-      skip the image and continue.
-
-    Hard stop after 3 tool calls.
-
-    -----------------------------
-    PHASE 4 — EMBEDDING
-    -----------------------------
-    Insert each generated image directly BELOW
-    its corresponding H2 heading using EXACT format:
+    Insert the generated image directly below the
+    matching H2 heading using this format:
 
     ![Descriptive alt text](generated_images/blog_xxxxx.png)
-    *Caption: One sentence explaining what the image shows.*
+    *Caption: One sentence describing what the image shows.*
 
     Rules:
-
-      • Images only below H2 headings
-      • Never inside paragraphs
-      • Never modify existing blog text
+      • Do not modify any blog text
       • Only insert image blocks
+      • Images must appear directly below the H2 heading
 
   expected_output: >
-    The complete Markdown blog post with 2–3 generated images
-    embedded directly below relevant H2 headings.
-
-    The original blog text remains completely unchanged.
-    Each image includes alt text and a one-sentence caption.
+    The finalized Markdown blog with images embedded in
+    the sections specified by the ImageDecision output.
 
   agent: image_generator
 
   context:
     - finalize_blog
+    - decide_images

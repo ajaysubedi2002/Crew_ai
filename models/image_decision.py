@@ -4,7 +4,7 @@ from typing import List
 class ImageDecision(BaseModel):
     """Structured output for image decisions"""
 
-    use_images: bool = Field(
+    generate_images: bool = Field(
         description="Whether images should be included in the blog"
     )
 
