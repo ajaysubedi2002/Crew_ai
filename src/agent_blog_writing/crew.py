@@ -5,6 +5,7 @@ from crewai_tools import TavilySearchTool
 from typing import List
 from agent_blog_writing.tools.custom_tool import BlogImageGeneratorTool
 from models.image_decision import ImageDecision
+from config import settings
 
 @CrewBase
 class AgentBlogWriting():
@@ -25,7 +26,9 @@ class AgentBlogWriting():
         """Standard LLM for research/writing agents."""
         return LLM(
             model="ollama/llama3.1:latest",
-            base_url="https://olm2.nishon.com.np",
+            # base_url="https://olm2.nishon.com.np",
+            base_url= settings.base_url,
+            
         )
 
 

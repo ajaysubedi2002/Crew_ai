@@ -1,0 +1,63 @@
+evaluate_blog:
+  description: >
+    Evaluate the following blog post:
+    
+    {blog_content}
+    
+    Provide detailed scores (1-10) and feedback on:
+    - Clarity and readability
+    - Depth and accuracy
+    - SEO optimization
+    - Structure and flow
+    - Engagement factor
+    
+    List specific issues and improvement recommendations.
+  expected_output: >
+    A comprehensive evaluation report with scores, specific 
+    issues identified, and actionable improvement recommendations.
+  agent: blog_evaluator
+
+human_review:
+  description: >
+    Review the evaluation report above.
+    
+    The human will now provide specific change requests.
+    
+    When prompted, enter your feedback about what changes
+    you want made to the blog post.
+    
+    Examples of feedback:
+    - "Make the introduction more engaging"
+    - "Add more statistics in section 2"
+    - "Simplify the technical explanations"
+    - "Fix the SEO issues mentioned"
+  expected_output: >
+    Human feedback with specific change requests for the blog.
+  agent: blog_evaluator
+  context:
+    - evaluate_blog
+
+revise_blog:
+  description: >
+    Revise the original blog post based on:
+    
+    1. The evaluation report findings
+    2. The human's specific change requests
+    
+    ORIGINAL BLOG:
+    {blog_content}
+    
+    Apply all requested changes while:
+    - Maintaining the original voice and tone
+    - Preserving accurate information
+    - Improving overall quality
+    - Addressing all flagged issues
+    
+    Output the complete revised blog post in Markdown.
+  expected_output: >
+    A fully revised, publication-ready blog post in Markdown
+    that addresses all evaluation issues and human feedback.
+  agent: blog_reviser
+  context:
+    - evaluate_blog
+    - human_review

@@ -1,4 +1,5 @@
 # Latest Updates on Iran vs Israel and America: A Comprehensive Analysis
+
 ## Introduction
 
 The world is witnessing a brewing storm in the Middle East, as tensions between Iran, Israel, and the United States reach a boiling point. The consequences of a full-blown conflict would be catastrophic, threatening regional stability and global economic security. This article delves into the latest updates on the Iran-Israel conflict, examining the complex web of interests, historical grievances, and military capabilities that are driving this crisis.
@@ -9,7 +10,7 @@ The 2015 nuclear deal, also known as the Joint Comprehensive Plan of Action (JCP
 
 The impact of this withdrawal cannot be overstated. According to a report by the Brookings Institution, "the US withdrawal from the JCPOA created an opening for Iran to renege on its commitments, which has led to a significant escalation of tensions in the region." (1) This report further highlights that "the US decision to withdraw from the JCPOA has also emboldened hardline elements within the Iranian government, who have called for increased aggression against Israel and the US."
 
-![JCPOA Impact](generated_images\blog_18089424.png) *Caption: An infographic explaining the key points of the JCPOA and its impact on regional dynamics.*
+![JCPOA Impact](generated_images/blog_18089424.png) *Caption: An infographic explaining the key points of the JCPOA and its impact on regional dynamics.*
 
 ## Escalating Military Tensions
 
@@ -17,7 +18,7 @@ Recent military developments have been a significant concern. In February 2023, 
 
 In response, Israel launched airstrikes on Iranian targets in Syria, leading to increased tensions between the two nations. (3) The escalation has been met with concern from regional players, who fear the consequences of a full-blown conflict.
 
-![Military Developments](generated_images\blog_6f11163b.png) *Caption: A map showing the locations of recent military developments in the region, including Iranian missile tests and Israeli airstrikes.*
+![Military Developments](generated_images/blog_6f11163b.png) *Caption: A map showing the locations of recent military developments in the region, including Iranian missile tests and Israeli airstrikes.*
 
 ## Strategic Analysis
 
